@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" >
+    <title>虚拟键盘</title>
+    <style>
+        #container{width: 800px;margin: 0 auto}
+        #inputArea{
+            width: 728px;
+            height: 250px;
+            line-height: 25px;
+            padding: 10px;
+            box-sizing: border-box;
+            font-size: 16px;
+            color: #333333;
+            outline: none;
+            resize: none;
+        }
+        .chinesePrompt{
+            width: 660px;
+            height: 40px;
+            overflow: hidden;
+            position: relative;
+            box-sizing: border-box;
+        }
+        .arrow{
+            position: absolute;
+            right: 0px;
+            z-index: 999;
+        }
+        .arrow i{
+            display: block;
+            width: 15px;
+            height: 10px;
+        }
+        .up{
+            background: url("img_arrow_up.png") no-repeat;
+            background-size: 15px 10px;
+            margin-top: 5px;
+        }
+        .down{
+            background: url("img_arrow_down.png") no-repeat;
+            background-size: 15px 10px;
+            margin-top: 10px;
+        }
+        .chinesePrompt .chinesePrompt-box{
+            font-size: 0;
+            position: relative;
+            box-sizing: border-box;
+        }
+        .chinesePrompt span{font-size: 16px; margin:0;padding:0;display:inline-block;line-height: 40px; cursor:pointer;width: 110px;height:40px;text-align:center;}
+        .keyboardBox{position:relative;width: 708px; height: 320px; margin: 0; padding: 10px; background-color: rgba(16, 176, 53, 0.3); font-size: 16px;}
+        .line{position: relative; height: 50px; line-height: 50px;}
+        .showInput {
+            margin: 0;
+            padding: 0 20px;
+            position: absolute;
+            bottom: 0;
+            color: #333333;
+            line-height: 35px;
+            height: 35px;
+            width: 500px;
+            overflow: hidden;
+            text-overflow:ellipsis;
+            white-space:nowrap;
+        }
+        .keys, .keysCmd, .keys_d{box-sizing: border-box; float: left; width: 45px;color: #ffffff; height: 45px; line-height: 45px; margin: 0 0 3px 3px; border-radius: 4px; border: 1px solid #85b1d5; text-align: center; cursor: pointer;
+            background-image: linear-gradient(to right, #26c55b, #10b035);
+        }
+        .keys:hover, .keysCmd:hover, .keys_d:hover{box-shadow: 0px 0px 3px #a2deda inset; opacity: 0.7}
+        .keys:active, .keysCmd:active, .keys_d:active{background: #6289ff
+        }
+        .active{background-color: #dedede; box-shadow: 0px 0px 3px #333 inset;}
+        .keys_d{height: 45px; line-height: 20px;}
+        .key_enter{width: 102px;}
+        .k-w-50{width: 50px;}
+        .k-w-70{width: 70px;}
+        .k-w-75{width: 75px;}
+        .k-w-80{width: 80px;}
+        .k-w-100{width: 100px;}
+        .k-w-120{width: 120px;}
+        .k-w-704{width: 704px;}
+        .gap{margin-left: 30px;}
+        .gap_t{margin-top: 10px;}
+        .line .l-h-40{line-height: 40px;}
+        .f-s-14{font-size: 14px;}
+        .t-a-l{padding-left: 15px; text-align: left;}
+    </style>
+</head>
+<body>
+<div id="container">
+    <textarea onblur="this.focus()" name="inputArea" id="inputArea"  placeholder="点击虚拟键盘输入"></textarea>
+    <div class="keyboardBox" id="keyboard">
+        <div class="chinesePrompt">
+            <div class="arrow">
+                <i class="up"></i>
+                <i class="down"></i>
+            </div>
+            <div class="chinesePrompt-box">
+            </div>
+        </div>
+        <div class="line gap_t">
+            <div class="keys_d t-a-l" data-kid="192"><div>~</div><div>`</div></div>
+            <div class="keys_d t-a-l" data-kid="49"><div>!</div><div>1</div></div>
+            <div class="keys_d t-a-l" data-kid="50"><div>@</div><div>2</div></div>
+            <div class="keys_d t-a-l" data-kid="51"><div>#</div><div>3</div></div>
+            <div class="keys_d t-a-l" data-kid="52"><div>$</div><div>4</div></div>
+            <div class="keys_d t-a-l" data-kid="53"><div>%</div><div>5</div></div>
+            <div class="keys_d t-a-l" data-kid="54"><div>^</div><div>6</div></div>
+            <div class="keys_d t-a-l" data-kid="55"><div>&amp;</div><div>7</div></div>
+            <div class="keys_d t-a-l" data-kid="56"><div>*</div><div>8</div></div>
+            <div class="keys_d t-a-l" data-kid="57"><div>(</div><div>9</div></div>
+            <div class="keys_d t-a-l" data-kid="48"><div>)</div><div>0</div></div>
+            <div class="keys_d t-a-l" data-kid="189"><div>_</div><div>-</div></div>
+            <div class="keys_d t-a-l" data-kid="187"><div>+</div><div>=</div></div>
+            <div class="keysCmd k-w-80 l-h-40 f-s-14" data-kid="8">Backspace</div>
+        </div>
+        <div class="line">
+            <div class="keysCmd k-w-50" data-kid="9">Tab</div>
+            <div class="keys" data-kid="81">Q</div>
+            <div class="keys" data-kid="87">W</div>
+            <div class="keys" data-kid="69">E</div>
+            <div class="keys" data-kid="82">R</div>
+            <div class="keys" data-kid="84">T</div>
+            <div class="keys" data-kid="89">Y</div>
+            <div class="keys" data-kid="85">U</div>
+            <div class="keys" data-kid="73">I</div>
+            <div class="keys" data-kid="79">O</div>
+            <div class="keys" data-kid="80">P</div>
+            <div class="keys_d t-a-l" data-kid="219"><div>{</div><div>[</div></div>
+            <div class="keys_d t-a-l" data-kid="221"><div>}</div><div>]</div></div>
+            <div class="keys_d k-w-75 t-a-l" data-kid="220"><div>|</div><div>\</div></div>
+        </div>
+        <div class="line">
+            <div class="keysCmd k-w-70 f-s-14" data-kid="20">CapsLock</div>
+            <div class="keys" data-kid="65">A</div>
+            <div class="keys" data-kid="83">S</div>
+            <div class="keys" data-kid="68">D</div>
+            <div class="keys" data-kid="70">F</div>
+            <div class="keys" data-kid="71">G</div>
+            <div class="keys" data-kid="72">H</div>
+            <div class="keys" data-kid="74">J</div>
+            <div class="keys" data-kid="75">K</div>
+            <div class="keys" data-kid="76">L</div>
+            <div class="keys_d t-a-l" data-kid="186"><div>:</div><div>;</div></div>
+            <div class="keys_d t-a-l" data-kid="222"><div>"</div><div>'</div></div>
+            <div class="keysCmd key_enter" data-kid="13">Enter</div>
+        </div>
+        <div class="line">
+            <div class="keysCmd k-w-100" data-kid="16">Shift</div>
+            <div class="keys" data-kid="90">Z</div>
+            <div class="keys" data-kid="88">X</div>
+            <div class="keys" data-kid="67">C</div>
+            <div class="keys" data-kid="86">V</div>
+            <div class="keys" data-kid="66">B</div>
+            <div class="keys" data-kid="78">N</div>
+            <div class="keys" data-kid="77">M</div>
+            <div class="keys_d t-a-l" data-kid="188"><div><</div><div>,</div></div>
+            <div class="keys_d t-a-l" data-kid="190"><div>></div><div>.</div></div>
+            <div class="keys_d t-a-l" data-kid="191"><div>?</div><div>/</div></div>
+            <div class="keysCmd k-w-120" data-kid="16">Shift</div>
+        </div>
+        <div class="line">
+            <div class="keysCmd k-w-704" data-kid="32"></div>
+        </div>
+        <p class="showInput"></p>
+    </div>
+</div>
+
+<script type="text/javascript" src="dictionary.js"></script>
+<script type="text/javascript" src="keyboard.js"></script>
+<script>
+	window.onload = function(){
+		new keyboard().addKeyboard('inputArea');
+	}
+</script>
+</body>
+</html>
